@@ -6,8 +6,6 @@ app = FastAPI()
 class UserCreate(BaseModel):
     name:str
 
-class User(UserCreate):
-    id : int
 
 # Base de datos simulada de usuarios
 users_db = [
@@ -40,12 +38,12 @@ def create_user(user: UserCreate):
     return new_user
 
 @app.put("/users/{id}")
-def update_user(id : int, user : User):
+def update_user(id : int, user : UserCreate):
     for idx in range(len(users_db)):
         if  users_db[idx].get("id") == id:
-            update_user = {"id":id, **user}
-            users_db[idx]=update_user
-            return update_user
+            updated_user = {"id":id, "name":user.name}
+            users_db[idx]=updated_user
+            return updated_user
     raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
 @app.delete("/users/{id}")

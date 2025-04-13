@@ -16,7 +16,9 @@ def generador_func(nombre):
 
 generador = generador_func("Andres")
 
-print(next(generador))
-print(next(generador))
+otro_generador = (u for u in DB if u["nombre"] == "Andres")
 
+print(next(otro_generador))
+print(next(otro_generador))
+print(next(otro_generador, 1))
 
